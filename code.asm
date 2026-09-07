@@ -1,0 +1,43 @@
+; four bit "AND" routine on the Intel 4004
+;
+START,
+    FIM 4 0
+	SRC 4
+	RDR
+	XCH 0
+	INC 8
+	SRC 4
+	RDR
+	XCH 1
+	JMS AND
+	XCH 2
+	WMP
+	JUN START
+	NOP
+
+; "AND" SUBROUTINE
+AND,
+    CLB
+	XCH 2
+	LDM 4
+AND_3,
+    XCH 0
+	RAR
+	XCH 0
+	JCN 10 ROTR1
+	XCH 1
+	RAR
+	XCH 1
+ROTR2,
+    XCH 2
+	RAR
+	XCH 2
+	DAC
+	JCN 12 AND_3
+	BBL 0
+ROTR1,
+    XCH 1
+	RAR
+	XCH 1
+	CLC
+	JUN ROTR2

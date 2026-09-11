@@ -1,25 +1,3 @@
-## 4004 patterns
-
-# one word machine instructions:
-# pattern = "OPCODE REG"
-# pattern = "OPCODE R_PAIR"
-# pattern = "OPCODE DATA"
-
-# two word machine instructions:
-# pattern = "OPCODE UPPER_ADDR MID_AND_LOW_ADDR"
-# pattern = "OPCODE CONDITION MID_AND_LOW_ADDR"
-# pattern = "OPCODE REG MID_AND_LOW_ADDR"
-# pattern = "OPCODE R_PAIR UPPER_AND_LOWER_DATA"
-
-# I/O, RAM and A group instructions
-# pattern = "OPCODE"
-# I/O and RAM - 1110 XXXX
-# A -           1111 XXXX
-
-#
-# write assembly code in code.asm
-#
-
 import os
 import time
 

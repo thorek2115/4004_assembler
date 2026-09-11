@@ -12,7 +12,7 @@ window.geometry("600x500")
 i4004_image = tk.PhotoImage(file="i4004.png")
 window.iconphoto(False, i4004_image)
 
-title_label = ttk.Label(master=window, text="4004 Machine Code: ", font=("Calibri", 18, "bold"))
+title_label = ttk.Label(master=window, text="Machine Code: ", font=("Calibri", 18, "bold"))
 title_label.pack()
 
 text_label = ttk.Text(master=window, height=10, width=20, font=("Calibri", 14))

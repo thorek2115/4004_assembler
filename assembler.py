@@ -23,6 +23,9 @@
 import os
 import time
 
+# extension for Intel 4040
+enabled_4040 = True
+
 t1 = time.perf_counter(), time.process_time()  # time measure
 
 if not "code.asm" in os.listdir('.'):
@@ -31,6 +34,23 @@ if not "code.asm" in os.listdir('.'):
     print("Created file code.asm in project directory")
     print("Exiting...")
     exit(-1)
+
+extension_4040 = {
+    "HLT": "01",
+    "BBS": "02",
+    "LCR": "03",
+    "OR4": "04",
+    "OR5": "05",
+    "AN6": "06",
+    "AN7": "07",
+    "DB0": "08",
+    "DB1": "09",
+    "SB0": "0A",
+    "SB1": "0B",
+    "EIN": "0C",
+    "DIN": "0D",
+    "RPM": "0E"
+}
 
 machine_code = []
 m_code_all = ""
@@ -66,6 +86,9 @@ def check_max_value(number, max_num):
     if int(number, 16) > max_num:
         print_error(f"Number has to be between 0 and {max_num}")
 
+def func_4040():
+    check_arg_count(1)
+    machine_code.append(extension_4040[upper_line[0]])
 
 with open("code.asm", "r") as file:
     for index, line in enumerate(file):
@@ -233,7 +256,13 @@ with open("code.asm", "r") as file:
                     check_arg_count(1)
                     machine_code.append("EF")
                 case _:
-                    print_error(f"Opcode {upper_line[0]} doesn't exist.")
+                    if not enabled_4040 and upper_line[0] in extension_4040:
+                        print_error("4040 instruction with 4004 cpu")
+                    elif enabled_4040 and upper_line[0] in extension_4040:
+                        func_4040()
+                    else:
+                        print_error(f"Opcode {upper_line[0]} doesn't exist.")
+
         elif line_is_label:
             label_addresses[line.strip()[:-1].upper()] = hex(len(machine_code))[2:]
             line_is_label = False
